@@ -1,11 +1,13 @@
 defmodule ShoppingListChallenge do
-  @spec generate_bill_by_email(list(map()), list(String.t())) :: map()
-  def generate_bill_by_email(_items_list, emails) do
+  @spec generate_bill_by_emails(list(map()), list(String.t())) :: map()
+  def generate_bill_by_emails(_items_list, emails) when is_list(emails) and length(emails) > 0 do
     with :ok <- validate_emails_format(emails),
          :ok <- validate_email_duplication(emails) do
       emails
     end
   end
+
+  def generate_bill_by_emails(_items_list, []), do: {:error, message: "Emails list is empty"}
 
   defp validate_emails_format(emails) do
     are_all_email_valid? = Enum.all?(emails, fn email -> Regex.match?(~r/@/, email) end)
