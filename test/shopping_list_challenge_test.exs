@@ -1,12 +1,14 @@
 defmodule ShoppingListChallengeTest do
   use ExUnit.Case
 
+  alias ShoppingList.Items.Item
+
   describe "generate_bill_by_emails/2" do
     setup do
       items = [
-        %{name: "Item1", amount: 3, unity_price: 1400},
-        %{name: "Item2", amount: 1, unity_price: 5650},
-        %{name: "Item3", amount: 7, unity_price: 250}
+        %Item{name: "Item1", amount: 3, unity_price: 1400},
+        %Item{name: "Item2", amount: 1, unity_price: 5650},
+        %Item{name: "Item3", amount: 7, unity_price: 250}
       ]
 
       emails = ["johndoe@mail.com", "jimhalpert@mail.com", "diwght@mail.com"]
