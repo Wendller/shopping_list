@@ -1,9 +1,13 @@
 defmodule ShoppingListChallenge do
-  @spec generate_bill_by_emails(list(map()), list(String.t())) :: map()
-  def generate_bill_by_emails(_items_list, emails) when is_list(emails) and length(emails) > 0 do
+  alias ShoppingList.Items
+  alias ShoppingList.Items.Item
+
+  @spec generate_bill_by_emails(list(Item.t()), list(String.t())) :: map()
+  def generate_bill_by_emails(items_list, emails) when is_list(emails) and length(emails) > 0 do
     with :ok <- validate_emails_format(emails),
-         :ok <- validate_email_duplication(emails) do
-      emails
+         :ok <- validate_email_duplication(emails),
+         :ok <- Items.validate_all(items_list) do
+      items_list
     end
   end
 
