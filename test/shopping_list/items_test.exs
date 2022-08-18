@@ -39,4 +39,10 @@ defmodule ShoppingList.ItemsTest do
       assert Items.validate_all(items) == :ok
     end
   end
+
+  describe "calculate_total_price/1" do
+    test "returns the total price of list of items", %{items: items} do
+      assert Items.calculate_total_price(items) == {:ok, 11_600}
+    end
+  end
 end

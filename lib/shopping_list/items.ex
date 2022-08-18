@@ -13,4 +13,16 @@ defmodule ShoppingList.Items do
   end
 
   def validate_all([]), do: {:error, message: "Items list is empty"}
+
+  @spec calculate_total_price(list(Item.t())) :: {:ok, integer()}
+  def calculate_total_price(items) do
+    items_total_price =
+      Enum.reduce(items, 0, fn item, total_price ->
+        price_per_item = item.unity_price * item.amount
+
+        total_price + price_per_item
+      end)
+
+    {:ok, items_total_price}
+  end
 end

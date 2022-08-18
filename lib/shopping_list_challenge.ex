@@ -6,8 +6,9 @@ defmodule ShoppingListChallenge do
   def generate_bill_by_emails(items_list, emails) when is_list(emails) and length(emails) > 0 do
     with :ok <- validate_emails_format(emails),
          :ok <- validate_email_duplication(emails),
-         :ok <- Items.validate_all(items_list) do
-      items_list
+         :ok <- Items.validate_all(items_list),
+         {:ok, total_price} <- Items.calculate_total_price(items_list) do
+      total_price
     end
   end
 
