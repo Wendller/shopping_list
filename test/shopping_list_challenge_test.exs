@@ -99,5 +99,27 @@ defmodule ShoppingListChallengeTest do
 
       assert ShoppingListChallenge.generate_bill_by_emails(items, emails) == expected_response
     end
+
+    test "returns the bill when there is no value remaining" do
+      items = [
+        %Item{name: "Item1", amount: 1, unity_price: 100}
+      ]
+
+      emails = [
+        "michaelscott@mail.com",
+        "jimhalpert@mail.com",
+        "diwght@mail.com",
+        "pambeasley@mail.com"
+      ]
+
+      expected_response = %{
+        "michaelscott@mail.com" => 25,
+        "jimhalpert@mail.com" => 25,
+        "diwght@mail.com" => 25,
+        "pambeasley@mail.com" => 25
+      }
+
+      assert ShoppingListChallenge.generate_bill_by_emails(items, emails) == expected_response
+    end
   end
 end
