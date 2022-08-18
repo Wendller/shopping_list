@@ -53,10 +53,10 @@ Execute os testes através do comando:
 ```bash
 mix test --cover
 
-| Percentage  | Module                     |
-| ----------- | -------------------------- |
-| 100.00%     | Items                      |
-| 100.00%     | ShoppingListChallenge      |
-| ----------- | -------------------------- |
-| 100.00%     | Total                      |
+# | Percentage  | Module                     |
+# | ----------- | -------------------------- |
+# | 100.00%     | Items                      |
+# | 100.00%     | ShoppingListChallenge      |
+# | ----------- | -------------------------- |
+# | 100.00%     | Total                      |
 ```
