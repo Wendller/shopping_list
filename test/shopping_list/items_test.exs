@@ -30,5 +30,13 @@ defmodule ShoppingList.ItemsTest do
       assert Items.validate_all(invalid_items_list) ==
                {:error, message: "Amount and price of item can't be negative"}
     end
+
+    test "return error if items list is empty" do
+      assert Items.validate_all([]) == {:error, message: "Items list is empty"}
+    end
+
+    test "validate all items", %{items: items} do
+      assert Items.validate_all(items) == :ok
+    end
   end
 end
