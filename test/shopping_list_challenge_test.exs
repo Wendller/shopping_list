@@ -20,5 +20,12 @@ defmodule ShoppingListChallengeTest do
       assert ShoppingListChallenge.generate_bill_by_email(items, invalid_emails) ==
                {:error, [message: "Invalid e-mail format"]}
     end
+
+    test "return error for duplicated emails", %{items: items, emails: emails} do
+      duplicated_emails = ["johndoe@mail.com"] ++ emails
+
+      assert ShoppingListChallenge.generate_bill_by_email(items, duplicated_emails) ==
+               {:error, message: "Duplicated emails"}
+    end
   end
 end
