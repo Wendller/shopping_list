@@ -20,7 +20,7 @@ defmodule ShoppingList.ItemsTest do
       invalid_items_list = items ++ [invalid_item]
 
       assert Items.validate_all(invalid_items_list) ==
-               {:error, message: "Amount and price of item can't be negative"}
+               {:error, message: "Amount and price must be positive integers"}
     end
 
     test "return error if unity price of item is negative", %{items: items} do
@@ -28,7 +28,15 @@ defmodule ShoppingList.ItemsTest do
       invalid_items_list = items ++ [invalid_item]
 
       assert Items.validate_all(invalid_items_list) ==
-               {:error, message: "Amount and price of item can't be negative"}
+               {:error, message: "Amount and price must be positive integers"}
+    end
+
+    test "return error if amount is not integer", %{items: items} do
+      invalid_item = %Item{name: "Item4", amount: 0.5, unity_price: 1400}
+      invalid_items_list = items ++ [invalid_item]
+
+      assert Items.validate_all(invalid_items_list) ==
+               {:error, message: "Amount and price must be positive integers"}
     end
 
     test "return error if items list is empty" do

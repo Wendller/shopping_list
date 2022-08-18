@@ -3,11 +3,17 @@ defmodule ShoppingList.Items do
 
   @spec validate_all(list(Item.t())) :: atom() | tuple()
   def validate_all([%Item{} = _item | _] = items) do
-    is_any_item_invalid? =
-      Enum.any?(items, fn item -> item.amount <= 0 or item.unity_price <= 0 end)
+    is_any_invalid_item? =
+      Enum.any?(items, fn item ->
+        is_any_non_positive_value = item.amount <= 0 or item.unity_price <= 0
 
-    case is_any_item_invalid? do
-      true -> {:error, message: "Amount and price of item can't be negative"}
+        is_any_non_integer_value = not is_integer(item.amount) or not is_integer(item.unity_price)
+
+        is_any_non_positive_value or is_any_non_integer_value
+      end)
+
+    case is_any_invalid_item? do
+      true -> {:error, message: "Amount and price must be positive integers"}
       false -> :ok
     end
   end
