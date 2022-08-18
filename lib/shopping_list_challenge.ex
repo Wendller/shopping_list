@@ -8,7 +8,17 @@ defmodule ShoppingListChallenge do
          :ok <- validate_email_duplication(emails),
          :ok <- Items.validate_all(items_list),
          {:ok, total_price} <- Items.calculate_total_price(items_list) do
-      total_price
+      emails_amount = length(emails)
+      price_per_email = Integer.floor_div(total_price, emails_amount)
+      remaining_value = Integer.mod(total_price, emails_amount)
+      emails_to_distribute_ramaining_value = Enum.take(emails, remaining_value)
+
+      bill_of_equal_price_per_email = Enum.into(emails, %{}, &{&1, price_per_email})
+
+      bill_of_remaining_value =
+        Enum.into(emails_to_distribute_ramaining_value, %{}, &{&1, price_per_email + 1})
+
+      Map.merge(bill_of_equal_price_per_email, bill_of_remaining_value)
     end
   end
 
