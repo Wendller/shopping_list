@@ -1,18 +1,17 @@
 defmodule ShoppingListChallenge do
-  @moduledoc """
-  Documentation for `ShoppingListChallenge`.
-  """
+  @spec generate_bill_by_email(list(map()), list(String.t())) :: map()
+  def generate_bill_by_email(_items_list, emails) do
+    with :ok <- validate_emails_format(emails) do
+      emails
+    end
+  end
 
-  @doc """
-  Hello world.
+  defp validate_emails_format(emails) do
+    are_all_email_valid? = Enum.all?(emails, fn email -> Regex.match?(~r/@/, email) end)
 
-  ## Examples
-
-      iex> ShoppingListChallenge.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    case are_all_email_valid? do
+      false -> {:error, message: "Invalid e-mail format"}
+      true -> :ok
+    end
   end
 end
